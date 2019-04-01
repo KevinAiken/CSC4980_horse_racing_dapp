@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
-import Web3 from 'web3';
+import Home from './Home';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import About from './About';
 
 
-const web3 = new Web3(Web3.givenProvider);
 class App extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = { accounts: []};
-    }
-
-    componentDidMount() {
-        this.setState({ isLoading: true });
-        web3.eth.getAccounts().then(data => this.setState({ accounts: data}));
-    }
-
-
-  render() {
-        const { accounts } = this.state;
+    render() {
         return (
-          <div className="App">
-            <header className="App-header">
-              <p>
-                Your ethereum account is: {accounts[0]}
-              </p>
-            </header>
-          </div>
-        );
-  }
+            <Router>
+                <Switch>
+                    <Route path='/' exact={true} component={Home}/>
+                    <Route path='/about' exact={true} component={About}/>
+                </Switch>
+            </Router>
+        )
+    }
 }
 
 export default App;
