@@ -3,7 +3,7 @@ import {Component} from "react";
 import React from "react";
 import AppNavbar from "./AppNavbar";
 
-const web3 = new Web3(Web3.givenProvider);
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 class Home extends Component {
 
