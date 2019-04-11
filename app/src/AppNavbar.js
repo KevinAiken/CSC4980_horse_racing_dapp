@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -23,7 +22,10 @@ export default class AppNavbar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="mr-auto" navbar>
                     <NavItem>
-                        <NavLink tag={Link} to="/About">About</NavLink>
+                        <NavLink tag={Link} to="/about">About</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} to="/network-info">Network</NavLink>
                     </NavItem>
                 </Nav>
             </Collapse>
