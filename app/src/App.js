@@ -8,21 +8,23 @@ import NetworkInfo from './NetworkInfo';
 import {Drizzle} from "drizzle";
 import MyStringStore from "./contracts/MyStringStore.json";
 
-const options = {
+const drizzleOptions = {
     contracts: [MyStringStore],
     web3: {
         fallback: {
             type: "ws",
-            url: "ws://127.0.0.1:8545",
+            url: "", //setting this will override the default, making drizzle fail if metamask is not installed
         },
     },
 };
 
-const drizzle = new Drizzle(options);
+// instantiating drizzle
+
+const drizzle = new Drizzle(drizzleOptions);
 
 class App extends Component {
+    // setting up routes here so entering URLs will load specific components
     render() {
-
         return (
             <Router>
                 <Switch>
