@@ -8,6 +8,16 @@
   pointer-events: none;
 }
 
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+
+.navbar-brand>img {
+  padding: 7px 14px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
