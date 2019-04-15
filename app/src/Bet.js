@@ -1,6 +1,12 @@
-import React from "react";
+import React, {Component} from "react";
+import AppNavbar from "./AppNavbar";
+// import SetString from "./SetString";
+// import ReadString from "./ReadString";
 
-class SetString extends React.Component {
+/*
+This page allows players to view upcoming races and place bets
+ */
+class Bet extends Component {
     state = { stackId: null };
 
     handleKeyDown = e => {
@@ -37,9 +43,10 @@ class SetString extends React.Component {
             <div>
                 <input type="text" onKeyDown={this.handleKeyDown} />
                 <div>{this.getTxStatus()}</div>
+                <p>This page should allow a user to view horses to bet on and place bets</p>
             </div>
         );
     }
 }
 
-export default SetString;
+export default Bet;
