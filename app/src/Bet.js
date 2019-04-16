@@ -1,5 +1,9 @@
 import React, {Component} from "react";
-import {Button} from "reactstrap";
+import AppNavbar from "./AppNavbar";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import './Bet.css';
+// import SetString from "./SetString";
+// import ReadString from "./ReadString";
 
 /*
 This page allows players to view upcoming races and place bets
@@ -36,23 +40,33 @@ class Bet extends Component {
             return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
     };
 
-    createRace = () => {
-        const { drizzle, drizzleState } = this.props;
-        const contract = drizzle.contracts.HorsEther;
-
-        const stackId = contract.methods["createRace"].cacheSend({
-            from: drizzleState.accounts[0]
-        });
-
-        this.setState({ stackId });
-    };
-
     render() {
         return (
             <div>
+                <h1 className="display-3">Select your horse and race, then place a bet.</h1>
+                <FormGroup>
+                    <Label for="horses" className="horseLabel">Horses</Label>
+                    <Input type="select" name="selectHorse" id="horseSelector">
+                        <option>God's Wraith</option>
+                        <option>Majestic Thunder</option>
+                        <option>Brick</option>
+                        <option>Rigatoni Fastaroni</option>
+                        <option>John Adams</option>
+                    </Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="races" className="horseLabel">Races</Label>
+                    <Input type="select" name="selectRace" id="raceSelector">
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                    </Input>
+                </FormGroup>
                 <input type="text" onKeyDown={this.handleKeyDown} />
-                <div>Transaction status: {this.getTxStatus()}</div>
-                <p>This page should allow a user to view horses to bet on and place bets</p>
+                <Button color="success" className="button">Bet</Button>
+                <div>{this.getTxStatus()}</div>
             </div>
         );
     }
