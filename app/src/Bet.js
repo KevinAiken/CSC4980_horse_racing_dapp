@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import AppNavbar from "./AppNavbar";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import './Bet.css';
 // import SetString from "./SetString";
 // import ReadString from "./ReadString";
 
@@ -41,9 +43,30 @@ class Bet extends Component {
     render() {
         return (
             <div>
+                <h1 className="display-3">Select your horse and race, then place a bet.</h1>
+                <FormGroup>
+                    <Label for="horses" className="horseLabel">Horses</Label>
+                    <Input type="select" name="selectHorse" id="horseSelector">
+                        <option>God's Wraith</option>
+                        <option>Majestic Thunder</option>
+                        <option>Brick</option>
+                        <option>Rigatoni Fastaroni</option>
+                        <option>John Adams</option>
+                    </Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="races" className="horseLabel">Races</Label>
+                    <Input type="select" name="selectRace" id="raceSelector">
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                        <option>Filler value</option>
+                    </Input>
+                </FormGroup>
                 <input type="text" onKeyDown={this.handleKeyDown} />
+                <Button color="success" className="button">Bet</Button>
                 <div>{this.getTxStatus()}</div>
-                <p>This page should allow a user to view horses to bet on and place bets</p>
             </div>
         );
     }
