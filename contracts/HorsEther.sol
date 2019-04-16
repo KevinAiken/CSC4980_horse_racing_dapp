@@ -47,6 +47,18 @@ contract HorsEther {
         races[raceId].numOfBets=0;
     }
 
+    function forceEvaluateRaceWithSpecificWinner(uint _raceIndex, uint _winningHorseIndex) public payable {
+        for(uint i = 0; i < races[_raceIndex].bets.length; i++){
+            Bet memory tempBet = races[_raceIndex].bets[i];
+            if(tempBet.horseNum == _winningHorseIndex) {
+                address payable tempAddress = tempBet.bettorAddr;
+                //tempAddress.send(tempBet.betAmount*races[_raceIndex].horses.length);
+                tempAddress.transfer(tempBet.betAmount*races[_raceIndex].horses.length);
+            }
+        }
+    }
+
+
     //check if the bettor exist in the race already
     //get the race based in raceId
     //add bettor to the race and add horsesInfo to the race
