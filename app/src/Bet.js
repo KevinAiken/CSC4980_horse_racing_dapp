@@ -1,9 +1,6 @@
 import React, {Component} from "react";
-import AppNavbar from "./AppNavbar";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, FormGroup, Label, Input} from 'reactstrap';
 import './Bet.css';
-// import SetString from "./SetString";
-// import ReadString from "./ReadString";
 
 /*
 This page allows players to view upcoming races and place bets
@@ -13,15 +10,16 @@ class Bet extends Component {
 
     handleKeyDown = e => {
         if (e.keyCode === 13) {
-            this.setValue(e.target.value);
+            this.placeBet(e.target.value);
         }
     };
 
-    setValue = value => {
+    placeBet = value => {
         const { drizzle, drizzleState } = this.props;
-        const contract = drizzle.contracts.MyStringStore;
+        const contract = drizzle.contracts.HorsEther;
 
-        const stackId = contract.methods["set"].cacheSend(value, {
+        //todo replace this with actual parameters for createbet
+        const stackId = contract.methods["createBet"].cacheSend(value, {
             from: drizzleState.accounts[0]
         });
 
@@ -43,7 +41,7 @@ class Bet extends Component {
     render() {
         return (
             <div>
-                <h1 className="display-3">Select your horse and race, then place a bet.</h1>
+                <h1>Select your horse and race, then place a bet.</h1>
                 <FormGroup>
                     <Label for="horses" className="horseLabel">Horses</Label>
                     <Input type="select" name="selectHorse" id="horseSelector">
