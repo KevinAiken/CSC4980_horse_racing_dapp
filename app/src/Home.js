@@ -13,7 +13,7 @@ class Home extends Component {
                     <h1 className="display-3">Welcome to HorsEther</h1>
                     <p className="lead">Place bets on simulated horse races with Ethereum</p>
                     <hr className="my-2" />
-                    <p>Here's another line for some more info</p>
+                    <p>Click below to start placing bets.</p>
                     <p className="lead">
                         <Button color="warning"><Link  to='/bet' style={{ textDecoration: 'none', color: 'black' }}>Get Started</Link></Button>
                     </p>
