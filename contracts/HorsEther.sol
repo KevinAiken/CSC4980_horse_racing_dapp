@@ -14,7 +14,7 @@ contract HorsEther {
     }
 
     struct Bet {
-        address bettorAddr;//bettor address
+        address payable bettorAddr;//bettor address
         bool rewarded; // if true, person already has been rewarded
         uint horseNum; //horse on which better is betting
         uint betAmount; //amount they bet
@@ -40,19 +40,20 @@ contract HorsEther {
     //add bettor to the race and add horsesInfo to the race
     //add amount
     function createBet(uint _horseNumber, uint _raceId, uint _amount) public payable{
-        require(!checkBettorExists(msg.sender, _raceId));
         require(msg.value >= _amount);
         Race storage r= races[_raceId];
         r.bets.push(Bet(msg.sender, false, _horseNumber, _amount));
     }
 
-    //check if the bettor has already participated in betting for specific race
-    function checkBettorExists(address bettor, uint raceId) public view returns(bool){
-        Race storage r= races[raceId];
-        for(uint i = 0; i < r.bets.length; i++){
-            if(r.bets[i].bettorAddr == bettor) return true;
+    function forceEvaluateRaceWithSpecificWinner(uint _raceIndex, uint _winningHorseIndex) public payable {
+        for(uint i = 0; i < races[_raceIndex].bets.length; i++){
+            Bet memory tempBet = races[_raceIndex].bets[i];
+            if(tempBet.horseNum == _winningHorseIndex) {
+                address payable tempAddress = tempBet.bettorAddr;
+                //tempAddress.send(tempBet.betAmount*races[_raceIndex].horses.length);
+                tempAddress.transfer(tempBet.betAmount*races[_raceIndex].horses.length);
+            }
         }
-        return false;
     }
 
 }

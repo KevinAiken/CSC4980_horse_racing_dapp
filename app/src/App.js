@@ -7,6 +7,7 @@ import PastRaces from './PastRaces';
 import Bet from './Bet';
 import AppNavbar from "./AppNavbar";
 import {Alert} from "reactstrap";
+import Admin from "./Admin";
 
 
 class App extends Component {
@@ -71,6 +72,8 @@ class App extends Component {
                                                                drizzleState={this.state.drizzleState}/>}/>
                             <Route path='/profile' exact={true} render={(props) => <Profile drizzle={this.props.drizzle}
                                                                                                drizzleState={this.state.drizzleState}/>}/>
+                            <Route path='/admin' exact={true} render={(props) => <Admin drizzle={this.props.drizzle}
+                                                                                        drizzleState={this.state.drizzleState}/>}/>
                         </Switch>
                     </div>
                 </Router>

@@ -4,25 +4,8 @@ import {Button} from "reactstrap";
 /*
 This page allows players to view upcoming races and place bets
  */
-class Bet extends Component {
+class Admin extends Component {
     state = { stackId: null };
-
-    handleKeyDown = e => {
-        if (e.keyCode === 13) {
-            this.setValue(e.target.value);
-        }
-    };
-
-    setValue = value => {
-        const { drizzle, drizzleState } = this.props;
-        const contract = drizzle.contracts.MyStringStore;
-
-        const stackId = contract.methods["set"].cacheSend(value, {
-            from: drizzleState.accounts[0]
-        });
-
-        this.setState({ stackId });
-    };
 
     getTxStatus = () => {
         const {transactions, transactionStack } = this.props.drizzleState;
@@ -50,12 +33,11 @@ class Bet extends Component {
     render() {
         return (
             <div>
-                <input type="text" onKeyDown={this.handleKeyDown} />
+                <Button onClick={() => this.createRace()}>Create a race</Button>
                 <div>Transaction status: {this.getTxStatus()}</div>
-                <p>This page should allow a user to view horses to bet on and place bets</p>
             </div>
         );
     }
 }
 
-export default Bet;
+export default Admin;
