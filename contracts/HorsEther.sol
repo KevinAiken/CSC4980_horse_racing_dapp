@@ -19,16 +19,16 @@ contract HorsEther {
     }
 
     struct Bet {
-        address payable bettorAddr;//bettor address
+        address payable bettorAddr;
         bool rewarded; // if true, person already has been rewarded
-        uint horseNum; //horse on which better is betting
-        uint betAmount; //amount they bet
+        uint horseNum;
+        uint betAmount;
     }
 
-    //bet amount on horse
-    mapping(uint => Race) public races; //race array
+    mapping(uint => Race) public races;
     mapping(uint=> Horse) public horseInfo;
-    event ChooseWinner(string _horseName );
+    event ChooseWinner(string _horseName, uint _raceId );
+
 
     function createRace() public {
         uint raceId;
@@ -45,15 +45,11 @@ contract HorsEther {
     }
 
     //check if the bettor exist in the race already
-    //get the race based in raceId
-    //add bettor to the race and add horsesInfo to the race
-    //add amount
+    //create a bet and add it to the race
     function createBet(uint _horseNumber, uint _raceId, uint _amount) public payable{
-        require(!checkBettorExists(msg.sender, _raceId),
-            "Cannot bet on same horse more than once");
-        require(msg.value >= _amount,
-            "Bet amount must be equal or less than sent amount");
-        // require(races[_raceId].isExpired == false, "Race has been expired");
+        require(!checkBettorExists(msg.sender, _raceId),"Cannot bet on same horse more than once");
+        require(msg.value >= _amount,"Bet amount must be equal or less than sent amount");
+        require(races[_raceId].isExpired == false, "Race has been expired");
 
         Race storage r= races[_raceId];
         r.bets.push(Bet(msg.sender, false, _horseNumber, _amount));
@@ -69,16 +65,18 @@ contract HorsEther {
         return false;
     }
 
-    //call when race set as hasExpired
+    //call when race is set true to isexpired
+    //randomly select the winning horse number
     function chooseWinner(uint raceId) public returns (uint){
-        //
         Race storage race= races[raceId];
         uint winningHorse;
-        winningHorse= 3;// TODO need to add random number
-        emit ChooseWinner( horseInfo[winningHorse].horseName);
+        winningHorse = (uint256(keccak256(abi.encodePacked(now, msg.sender, block.timestamp))) % 5) + 1;
+        emit ChooseWinner( horseInfo[winningHorse].horseName, raceId);
         return winningHorse;
     }
 
+    //called after winner is chosen
+    //pay out all the winners for the given raceId
     function payOutWinners(uint winningHorse, uint raceId ) public payable{
         Race memory race= races[raceId];
         for(uint i=0; i< race.numOfBets; i++){
@@ -106,7 +104,7 @@ contract HorsEther {
         return validRaces;
     }
 
-    //expired but not paidOut
+    //get raceIds for races that has expired but not paidOut
     function getRacesNotPaidOut() public returns (uint[] memory){
         uint[] memory notPaidOut= new uint[](numOfRaces);
         uint index=0;
@@ -119,7 +117,8 @@ contract HorsEther {
         return notPaidOut;
     }
 
-    //can only be set by Admin
+    //input: raceId
+    //set the race as expired
     function setAsExpired(uint _raceId) public{
         races[_raceId].isExpired= true;
     }
