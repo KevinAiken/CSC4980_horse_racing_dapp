@@ -1,126 +1,105 @@
 pragma solidity ^0.5.0;
 
 contract HorsEther {
-    uint numOfRaces= 0;
-    string[] horseNames = ["horse1","horse2","horse3","horse4","horse5"];
-
-    struct Horse{
-        uint horseNumber;
-        string horseName;
-    }
 
     struct Race {
-        uint raceId;
-        Horse[] horses;
-        Bet[] bets;
-        bool paidOut;
-        bool isExpired;
-        uint numOfBets;
+        uint[] horses; // currently only running 5 horse races
+        bool paidOut; // after a race is paidOut it can be considered done
+        uint expireTime; //unix timestamp
+        uint[] bets;
+        int winner; // -1 until a winner is determined
     }
 
     struct Bet {
-        address payable bettorAddr;
+        address payable bettorAddr;//bettor address
         bool rewarded; // if true, person already has been rewarded
-        uint horseNum;
-        uint betAmount;
+        uint horseNum; //horse on which better is betting
+        uint betAmount; //amount they bet
     }
 
-    mapping(uint => Race) public races;
-    mapping(uint=> Horse) public horseInfo;
-    event ChooseWinner(string _horseName, uint _raceId );
+    // lookup betIds from the uint[] of bets in Race structs
+    mapping(uint => Bet) private betIdToBet;
 
+    Race[] private races;
 
-    function createRace() public {
-        uint raceId;
-        numOfRaces++;
-        raceId= numOfRaces;
-        for(uint i=1 ; i<6; i++){
-            races[raceId].horses.push(Horse(i, horseNames[i-1]));
-            horseInfo[i]= Horse(i, horseNames[i-1]);
+    uint betsInSystem = 0;
+
+    //bytes32 public adminPassHash = keccak256(abi.encode("")); //useful for manually generating passwords
+    bytes32 private adminPassHash = 0xc8d1bf7f2c23c61179850dae51b6ec884c2215578d89634882b1d4cb66984c47;
+
+    function createRace(uint[] memory _horseNumbers, uint _raceTime, string memory _password) public {
+        require(keccak256(abi.encode(_password)) == adminPassHash, "admin password is incorrect");
+        require(_raceTime > now, "Race must take place in the future");
+
+        uint[] memory bets;
+        races.push(Race(_horseNumbers, false, _raceTime, bets, -1));
+    }
+
+    function getNumberOfBetsOnRace(uint _raceIndex) public view returns(uint) {
+        return races[_raceIndex].bets.length;
+    }
+
+    function getNumberOfHorsesInRace(uint _raceIndex) public view returns(uint) {
+        return races[_raceIndex].horses.length;
+    }
+
+    function getNumberOfRaces() public view returns(uint) {
+        return races.length;
+    }
+
+    function getRace(uint raceIndex) public view returns(uint[] memory, bool, uint, uint, int) {
+        return (races[raceIndex].horses, races[raceIndex].paidOut, races[raceIndex].expireTime,
+        getNumberOfBetsOnRace(raceIndex), races[raceIndex].winner);
+    }
+
+    function createBet(uint _raceIndex, uint _horseIndex, uint _amount) public payable{
+        require(msg.value >= _amount,
+            "Bet amount must be equal or less than sent amount");
+        require(_raceIndex < races.length, "Race does not exist");
+        require(races[_raceIndex].expireTime > now, "Race has already run");
+        require((_horseIndex >= 0 && _horseIndex < races[_raceIndex].horses.length),
+            "Horse number does not exist in this race");
+
+        betsInSystem++;
+        uint newBetId = (betsInSystem);
+        betIdToBet[newBetId] = Bet(msg.sender, false, _horseIndex, _amount);
+        races[_raceIndex].bets.push(newBetId);
+    }
+
+    // Randomly generates a race winner, pays betters, and marks the race completed
+    function evaluateRace(uint _raceIndex, string memory _password) public payable {
+        require(keccak256(abi.encode(_password)) == adminPassHash, "admin password is incorrect");
+        require(races[_raceIndex].expireTime < now, "Race not yet run");
+        require(races[_raceIndex].paidOut == false, "Race already evaluated");
+        require(_raceIndex < races.length, "Race does not exist");
+
+        uint random_number = uint(blockhash(block.number-1))%10;
+        int winner = 1000;
+        if(random_number == 1 || random_number == 0) {
+            winner = 0;
+        } else if(random_number == 2 || random_number == 3) {
+            winner = 1;
+        } else if(random_number == 4 || random_number == 5) {
+            winner = 2;
+        } else if(random_number == 6 || random_number == 7) {
+            winner = 3;
+        } else if(random_number == 8 || random_number == 9) {
+            winner = 4;
         }
-        races[raceId].paidOut= false;
-        races[raceId].isExpired= false;
-        races[raceId].numOfBets=0;
+        require(winner != 1000 && winner >= 0, "random winner errored");
 
-    }
-
-    //check if the bettor exist in the race already
-    //create a bet and add it to the race
-    function createBet(uint _horseNumber, uint _raceId, uint _amount) public payable{
-        require(!checkBettorExists(msg.sender, _raceId),"Cannot bet on same horse more than once");
-        require(msg.value >= _amount,"Bet amount must be equal or less than sent amount");
-        require(races[_raceId].isExpired == false, "Race has been expired");
-
-        Race storage r= races[_raceId];
-        r.bets.push(Bet(msg.sender, false, _horseNumber, _amount));
-        r.numOfBets +=1;
-    }
-
-    //check if the bettor has already participated in betting for specific race
-    function checkBettorExists(address bettor, uint raceId) public view returns(bool){
-        Race storage r= races[raceId];
-        for(uint i = 0; i < r.bets.length; i++){
-            if(r.bets[i].bettorAddr == bettor) return true;
-        }
-        return false;
-    }
-
-    //call when race is set true to isexpired
-    //randomly select the winning horse number
-    function chooseWinner(uint raceId) public returns (uint){
-        Race storage race= races[raceId];
-        uint winningHorse;
-        winningHorse = (uint256(keccak256(abi.encodePacked(now, msg.sender, block.timestamp))) % 5) + 1;
-        emit ChooseWinner( horseInfo[winningHorse].horseName, raceId);
-        return winningHorse;
-    }
-
-    //called after winner is chosen
-    //pay out all the winners for the given raceId
-    function payOutWinners(uint winningHorse, uint raceId ) public payable{
-        Race memory race= races[raceId];
-        for(uint i=0; i< race.numOfBets; i++){
-            Bet memory bet= race.bets[i];
-            if(bet.horseNum == winningHorse){
-                uint winningAmt = ((bet.betAmount * horseNames.length) - ((bet.betAmount * horseNames.length) /10));
-                bet.bettorAddr.transfer(winningAmt);
-                bet.rewarded= true;
+        if(races[_raceIndex].bets.length > 0) {
+            for(uint i = 0; i < races[_raceIndex].bets.length; i++){
+                Bet memory tempBet = betIdToBet[races[_raceIndex].bets[i]];
+                if(tempBet.horseNum == uint(winner)) {
+                    uint winAmount = tempBet.betAmount*races[_raceIndex].horses.length;
+                    require(address(this).balance > winAmount, "Not enough funds to reward bettor");
+                    tempBet.bettorAddr.transfer(winAmount- uint(winAmount/5));
+                }
             }
         }
-        race.paidOut= true;
+
+        races[_raceIndex].paidOut = true;
+        races[_raceIndex].winner = winner;
     }
-
-    //return raceIds that are still going on - not expired and not paidOut
-    function getValidRaceIds() public returns (uint[] memory){
-        uint[] memory validRaces= new uint[](numOfRaces);
-        uint index=0;
-
-        for (uint i = 1; i <= numOfRaces; i++) {
-            if( races[i].paidOut== false && races[i].isExpired == false){
-                validRaces[index]= i;
-                index++;
-            }
-        }
-        return validRaces;
-    }
-
-    //get raceIds for races that has expired but not paidOut
-    function getRacesNotPaidOut() public returns (uint[] memory){
-        uint[] memory notPaidOut= new uint[](numOfRaces);
-        uint index=0;
-        for (uint i = 1; i <= numOfRaces; i++) {
-            if( races[i].paidOut== false && races[i].isExpired == true){
-                notPaidOut[index]= i;
-                index++;
-            }
-        }
-        return notPaidOut;
-    }
-
-    //input: raceId
-    //set the race as expired
-    function setAsExpired(uint _raceId) public{
-        races[_raceId].isExpired= true;
-    }
-
 }
