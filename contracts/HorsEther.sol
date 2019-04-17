@@ -1,6 +1,8 @@
 pragma solidity ^0.5.0;
 
 contract HorsEther {
+    uint numOfRaces= 0;
+    string[] horseNames = ["horse1","horse2","horse3","horse4","horse5"];
 
     struct Horse{
         uint horseNumber;
@@ -12,7 +14,7 @@ contract HorsEther {
         Horse[] horses;
         Bet[] bets;
         bool paidOut;
-        uint expireTime; //minutes
+        bool isExpired;
         uint numOfBets;
     }
 
@@ -23,13 +25,6 @@ contract HorsEther {
         uint betAmount; //amount they bet
     }
 
-    function init() public{
-        createRace();
-    }
-
-    uint numOfRaces;
-    string[] horseNames = ["horse1","horse2","horse3","horse4","horse5"];
-
     //bet amount on horse
     mapping(uint => Race) public races; //race array
     mapping(uint=> Horse) public horseInfo;
@@ -37,27 +32,17 @@ contract HorsEther {
 
     function createRace() public {
         uint raceId;
-        raceId= numOfRaces++;
+        numOfRaces++;
+        raceId= numOfRaces;
         for(uint i=1 ; i<6; i++){
             races[raceId].horses.push(Horse(i, horseNames[i-1]));
             horseInfo[i]= Horse(i, horseNames[i-1]);
         }
         races[raceId].paidOut= false;
-        races[raceId].expireTime= now + 5 minutes;
+        races[raceId].isExpired= false;
         races[raceId].numOfBets=0;
-    }
 
-    function forceEvaluateRaceWithSpecificWinner(uint _raceIndex, uint _winningHorseIndex) public payable {
-        for(uint i = 0; i < races[_raceIndex].bets.length; i++){
-            Bet memory tempBet = races[_raceIndex].bets[i];
-            if(tempBet.horseNum == _winningHorseIndex) {
-                address payable tempAddress = tempBet.bettorAddr;
-                //tempAddress.send(tempBet.betAmount*races[_raceIndex].horses.length);
-                tempAddress.transfer(tempBet.betAmount*races[_raceIndex].horses.length);
-            }
-        }
     }
-
 
     //check if the bettor exist in the race already
     //get the race based in raceId
@@ -68,7 +53,7 @@ contract HorsEther {
             "Cannot bet on same horse more than once");
         require(msg.value >= _amount,
             "Bet amount must be equal or less than sent amount");
-        require(races[_raceId].expireTime <= 0, "Race has been expired");
+        // require(races[_raceId].isExpired == false, "Race has been expired");
 
         Race storage r= races[_raceId];
         r.bets.push(Bet(msg.sender, false, _horseNumber, _amount));
@@ -84,26 +69,11 @@ contract HorsEther {
         return false;
     }
 
-    //gets valid races
-    function getValidRaceIds() public view returns (uint[] memory){
-        uint[] memory raceIds;
-
-        for (uint i = 0; i < numOfRaces; i++) {
-            Race storage race = races[i];
-            if(race.paidOut== false && race.expireTime <= 0){
-                raceIds[i] = race.raceId;
-            }
-
-            return raceIds;
-        }
-    }
-
-    //TODO call when time expires ****
+    //call when race set as hasExpired
     function chooseWinner(uint raceId) public returns (uint){
         //
         Race storage race= races[raceId];
         uint winningHorse;
-        //**** chooe winner
         winningHorse= 3;// TODO need to add random number
         emit ChooseWinner( horseInfo[winningHorse].horseName);
         return winningHorse;
@@ -122,7 +92,36 @@ contract HorsEther {
         race.paidOut= true;
     }
 
+    //return raceIds that are still going on - not expired and not paidOut
+    function getValidRaceIds() public returns (uint[] memory){
+        uint[] memory validRaces= new uint[](numOfRaces);
+        uint index=0;
 
+        for (uint i = 1; i <= numOfRaces; i++) {
+            if( races[i].paidOut== false && races[i].isExpired == false){
+                validRaces[index]= i;
+                index++;
+            }
+        }
+        return validRaces;
+    }
 
+    //expired but not paidOut
+    function getRacesNotPaidOut() public returns (uint[] memory){
+        uint[] memory notPaidOut= new uint[](numOfRaces);
+        uint index=0;
+        for (uint i = 1; i <= numOfRaces; i++) {
+            if( races[i].paidOut== false && races[i].isExpired == true){
+                notPaidOut[index]= i;
+                index++;
+            }
+        }
+        return notPaidOut;
+    }
+
+    //can only be set by Admin
+    function setAsExpired(uint _raceId) public{
+        races[_raceId].isExpired= true;
+    }
 
 }
