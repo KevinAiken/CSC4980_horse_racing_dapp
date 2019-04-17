@@ -19,7 +19,7 @@ export default class AppNavbar extends Component {
     render() {
         return <Navbar color="light" light expand="md" background-color="#e3f2fd">
             <NavbarBrand tag={Link} to="/">
-                <img src={logo} style={{width:75}}/>
+                <img src={logo} style={{width:75}} alt={"HorsEther Logo"}/>
                 HorsEther
             </NavbarBrand>
             <NavbarToggler onClick={this.toggle}/>
