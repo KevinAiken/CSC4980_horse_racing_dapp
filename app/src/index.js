@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MyStringStore from "./contracts/MyStringStore";
 import HorsEther from "./contracts/HorsEther";
 import {Drizzle} from "drizzle";
 
 const drizzleOptions = {
-    contracts: [MyStringStore, HorsEther],
+    contracts: [HorsEther],
     web3: {
         fallback: {
             type: "ws",

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Jumbotron, NavItem, NavLink} from "reactstrap";
+import {Button, Jumbotron} from "reactstrap";
 import {Link} from "react-router-dom";
 
 /*

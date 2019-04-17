@@ -34,12 +34,13 @@ class App extends Component {
         this.unsubscribe();
     }
 
+    // Making sure web3 initializes successfully
+    // TODO: Check if connection passed but no accounts in metamask
     // setting up routes here so entering URLs will load specific components
     render() {
         if (this.state.loading === 'failed') {
             return (
                 <div>
-
                     <Router>
                         <Alert color="danger">
                             Connecting to the blockchain has failed. Is Metamask installed and permission granted?
