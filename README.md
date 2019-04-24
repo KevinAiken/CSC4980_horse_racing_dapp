@@ -13,6 +13,36 @@ An application for you and your friends to bet on horse races on the Blockchain 
 
 ## How to set things up.
 
+1. Clone the project to your local machine
+
+2. Make sure that you have all the tools needed to use the app installed:
+> How to install tools
+..* Metamask (app)
+..* Ganache (app)
+..* Truffle
+
+3. Install all the project node modules 
+..* Navigate to your app folder and npm install
+
+4. Make sure that your Metamask account is up and running
+
+5. Start the application
+```BASH 
+$ npm start
+```
+
+6. Open Ganache and connect it to your Metamask
+> Your app should be up and running now
+
+7. Navigate to your application and enjoy!
+
+
+## How to play
+1. Click the button to begin
+2. Choose a race, a horse, and place a bet
+3. You will receive money if you won and no money if you lost
+4. Play again!
+
 **For developers (Us)**
 1. Clone the project to your local machine
 
@@ -43,6 +73,7 @@ Once tested and approved it will be folded in master.
 **For users**
 
 ### 🤔 How to run
+
 
 
 ## 🚶‍♀️ App walkthrough
