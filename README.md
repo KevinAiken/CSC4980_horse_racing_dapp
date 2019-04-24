@@ -17,9 +17,9 @@ An application for you and your friends to bet on horse races on the Blockchain 
 
 2. Make sure that you have all the tools needed to use the app installed:
 > How to install tools
-..* Metamask (app)
-..* Ganache (app)
-..* Truffle
+* Metamask (app)
+* Ganache (app)
+* Truffle
 
 3. Install all the project node modules 
 ..* Navigate to your app folder and npm install
