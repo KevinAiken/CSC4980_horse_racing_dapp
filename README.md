@@ -44,7 +44,7 @@ You can see how to do this by doing the following:
 
 6. Start the application
 ```BASH 
-> We are in the app folder
+// We are in the app folder
 $ npm start
 ```
 
