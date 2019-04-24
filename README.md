@@ -38,13 +38,13 @@ $ npm install
 
 5. Connect Ganache to your Metamask
 You can see how to do this by doing the following:
-..* Create a workspace in Ganache and enter your Metamask mneumonic in the "Accounts & Keys" section
+* Create a workspace in Ganache and enter your Metamask mneumonic in the "Accounts & Keys" section
 * Click on Metamask icon and click on the tab that says "Main Ethereum Network" and select "Custom RPC".
 * In the box titled "New RPC URL" (to the right of "New Network") enter http://127.0.0.1:7545 and click Save.
 
 6. Start the application
+> We are in the app folder
 ```BASH 
-// We are in the app folder
 $ npm start
 ```
 
