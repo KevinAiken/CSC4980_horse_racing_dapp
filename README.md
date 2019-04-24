@@ -4,7 +4,19 @@
 An application for you and your friends to bet on horse races on the Blockchain with Ethereum!
 
 ## 💯 Project facts
-* Developed by Alexander Mitchell, Kevin Aiken, Jenny Choi, Kevin Luna, and Aarohi Savaliya.
+* Developed by Kevin Aiken, Alexander Mitchell, Jenny Choi, Kevin Luna, and Aarohi Savaliya.
+
+## Technology stack
+### Frontend
+1. React
+2. Reacstrap
+3. Drizzle
+
+### Blockchain
+1. Truffle
+2. Ganache
+3. Metamask
+3. Solidity
 
 ## 🏎 Getting up and Running
 
