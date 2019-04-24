@@ -1,8 +1,7 @@
-# 🏇 Horseether [WiP]
+# 🏇 Horseether
 
 ## What is Horseether?
 An application for you and your friends to bet on horse races on the Blockchain with Ethereum!
-
 
 ## 💯 Project facts
 * Developed by Alexander Mitchell, Kevin Aiken, Jenny Choi, Kevin Luna, and Aarohi Savaliya.
@@ -14,25 +13,40 @@ An application for you and your friends to bet on horse races on the Blockchain 
 ## How to set things up.
 
 1. Clone the project to your local machine
+```BASH 
+$ git clone git@github.com:KevinAiken/CSC4980_horse_racing_dapp.git
+```
+> or download the zip and open the project on your local machine
 
 2. Make sure that you have all the tools needed to use the app installed:
+
 > How to install tools
-* Metamask (app)
-* Ganache (app)
+* Metamask [app] (https://metamask.io/).
+* Ganache [app] (https://truffleframework.com/ganache).
 * Truffle
-
-3. Install all the project node modules 
-..* Navigate to your app folder and npm install
-
-4. Make sure that your Metamask account is up and running
-
-5. Start the application
 ```BASH 
-$ npm start
+$ npm install -g truffle
 ```
 
-6. Open Ganache and connect it to your Metamask
-> Your app should be up and running now
+3. Navigate to the project folder via your terminal and install all the project node modules 
+```BASH 
+$ cd app
+$ npm install
+```
+ 
+4. Make sure that you are logged into your Metamask account.
+
+5. Connect Ganache to your Metamask
+You can see how to do this by doing the following:
+..* Create a workspace in Ganache and enter your Metamask mneumonic in the "Accounts & Keys" section
+* Click on Metamask icon and click on the tab that says "Main Ethereum Network" and select "Custom RPC".
+* In the box titled "New RPC URL" (to the right of "New Network") enter http://127.0.0.1:7545 and click Save.
+
+6. Start the application
+```BASH 
+> We are in the app folder
+$ npm start
+```
 
 7. Navigate to your application and enjoy!
 
@@ -43,6 +57,7 @@ $ npm start
 3. You will receive money if you won and no money if you lost
 4. Play again!
 
+This section will be removed
 **For developers (Us)**
 1. Clone the project to your local machine
 
@@ -72,20 +87,10 @@ Once tested and approved it will be folded in master.
 
 **For users**
 
-### 🤔 How to run
-
-
 
 ## 🚶‍♀️ App walkthrough
 This is where pictures and a possible screen capture of how the app works would go.
 
-
-## 🔑 Project components
-
-### 📚 Some Packages used (and why)
-
-
-### 🔩 Breaking down the code
 
 
 
