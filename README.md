@@ -97,4 +97,30 @@ After a race's time passes, it becomes eligible to be evaluated. Evaluating a ra
 To view the results of past races go to [http://localhost:3000/past-races](http://localhost:3000/past-races) and click "Load Races".
 
 ## 🚶‍♀️ App screenshots
-This is where pictures and a possible screen capture of how the app works would go.
+
+
+Home Page
+![HorsEther home page](/screenshots/splash_page.png "HorsEther Splash Page")
+
+
+Place a bet
+![HorsEther bets](/screenshots/place-bet.png "HorsEther Bets")
+
+
+View past races
+![HorsEther past races](/screenshots/past-races.png "HorsEther Past Races")
+
+
+View Profile
+![HorsEther profile](/screenshots/profile-page.png "HorsEther Profile Page")
+
+
+Admin Panel
+![HorsEther admin panel](/screenshots/admin-panel.png "HorsEther Admin Panel")
+
+
+Example of a connection failure
+![HorsEther connection fail](/screenshots/connection-failure.png "HorsEther Connection Failure")
+
+
+
