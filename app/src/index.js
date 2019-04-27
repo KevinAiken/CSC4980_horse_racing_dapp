@@ -17,7 +17,6 @@ const drizzleOptions = {
 };
 
 // instantiating drizzle
-
 const drizzle = new Drizzle(drizzleOptions);
 ReactDOM.render(<App drizzle={drizzle}/>, document.getElementById('root'));
 

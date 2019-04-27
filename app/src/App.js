@@ -13,6 +13,7 @@ import Admin from "./Admin";
 class App extends Component {
     state = {loading: true, drizzleState: null};
 
+    // initializing web3
     componentDidMount() {
         const { drizzle } = this.props;
 
@@ -34,9 +35,8 @@ class App extends Component {
         this.unsubscribe();
     }
 
-    // Making sure web3 initializes successfully
+    // Making sure web3 initializes successfully. Failed means no metamask
     // TODO: Check if connection passed but no accounts in metamask
-    // setting up routes here so entering URLs will load specific components
     render() {
         if (this.state.loading === 'failed') {
             return (
@@ -61,6 +61,7 @@ class App extends Component {
                 </div>)
         } else {
             return (
+                // setting up routes here so entering URLs will load specific components
                 <Router>
                     <AppNavbar/>
                     <div className='App'>
