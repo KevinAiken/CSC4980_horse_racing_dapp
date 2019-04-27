@@ -39,27 +39,32 @@ $ git clone git@github.com:KevinAiken/CSC4980_horse_racing_dapp.git
 * Truffle: `$ npm install -g truffle`
 
 
-3. Navigate to the project folder via your terminal and install all the project node modules 
+3. Deploy the truffle contracts
+```BASH
+$ truffle migrate --all --reset
+```
+
+4. Navigate to the project folder via your terminal and install all the project node modules 
 ```BASH 
 $ cd app
 $ npm install
 ```
  
-4. Make sure that you are logged into your Metamask account.
+5. Make sure that you are logged into your Metamask account.
 
-5. Point Metamask at your local Ganache blockchain.
+6. Point Metamask at your local Ganache blockchain.
 You can see how to do this by doing the following:
 * Create a workspace in Ganache and enter your Metamask mneumonic in the "Accounts & Keys" section
 * Click on Metamask icon and click on the tab that says "Main Ethereum Network" and select "Custom RPC".
 * In the box titled "New RPC URL" (to the right of "New Network") enter http://127.0.0.1:8545 and click Save.
 
-6. Start the application
+7. Start the application
 > We are in the app folder
 ```BASH 
 $ npm start
 ```
 
-7. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+8. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
 ## Operating HorsEther
 
