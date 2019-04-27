@@ -20,7 +20,10 @@ An application for you and your friends to bet on horse races on the Blockchain 
 
 ## 🏎 Getting up and Running
 
-> You can access this program by cloning the repo to your local machine via SSH.
+> You can access this program by cloning the repo to your local machine.
+
+## Project Layout
+The main directory of the project contains a default layout truffle initiated Solidity project. In addition to this, in the /app folder there is a React app bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## How to set things up.
 
@@ -60,51 +63,41 @@ You can see how to do this by doing the following:
 $ npm start
 ```
 
-7. Navigate to your application and enjoy!
+7. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
 
-## How to play
-1. Click the button to begin
-2. Choose a race, a horse, and place a bet
-3. You will receive money if you won and no money if you lost
-4. Play again!
+## How to make new races
+Before you start placing bets you'll need to act as the admin and create some races to bet on. Keep on mind a race must be in the future. 
+1. Navigate to [http://localhost:3000/admin](localhost:3000/admin) to view the admin panel.
+2. Type in a race time in ISO 8601 format under "Race Time". After this time bettors can no longer bet on the race, and the race becomes eligible to be evaluated. What evaluation is and how to do it is covered later.
+3. Enter the Admin Password, 'password'. 
+4. Press create a race.
+5. "Overrall Number of races" should increment.
+6. Click load races below. Your race should appear in the table.
 
-This section will be removed
-**For developers (Us)**
-1. Clone the project to your local machine
+
+## How to evaluate a race
+After a race's time passes, it becomes eligible to be evaluated. Evaluating a race runs a contract function that psuedo-randomly selected a winner, marks the race evaluated, and transfers funds to bettors following the formula (theirBetValue x numberOfHorses x .8) The other 20% is a fee to the game operator.
+1. Make sure your contract is properly funded. The contract needs enough Ethereum to be able to pay out potential bets. 
+2. Navigate to [http://localhost:3000/admin](localhost:3000/admin) to view the admin panel.
+3. Under the create a race form there is a form for evaluating races. 
+4. Enter the Race Index of the race you would like to evaluate. This number can be found by clicking "Load Races" and viewing your race in the table. The race time must be in the past.
+5. Enter the Admin Password, 'password'.
+6. Click "Evaluate Race". 
+7. Clicking "Load Races" should refresh the races and let you see the winner and that "Race Evaluated" is now true.
 
 
-2. Check if you have node installed. If not follow the [nvm setup] (https://nodesource.com/blog/installing-node-js-tutorial-using-nvm-on-mac-os-x-and-ubuntu/)
-> Do this step outside of the project
+## How to place a bet
+1. Click the "Get Started" on the home page or navigate to [http://localhost:3000/bet](localhost:3000/bet).
+2. Click "Load Races" to load races that are available to bet on.
+3. Enter the number of the race you would like to bet on based on the races table.
+4. Select a horse number. Horses are numbered sequentially.
+5. Enter your bet amount in Ethereum. Decimal amounts are also acceptable.
+6. Once a race is evaluated you will receive Ethereum if you bet on the winning horse and nothing if you bet on a losing horse.
 
-3. Navigate to your app folder and do the following command
-```bash
-$ npm install
-```
-> This will install of your needed node packages
 
-4. Download Ganache [here] (https://truffleframework.com/ganache).
-> This allows us to have our own local Blockchain.
-
-4. Open the project in your preferred text editor.
-> Make sure that your you have the proper Ethereum and Solidity tools installed.
-
-5. Follow the instructions on the app Readme. [Here] (https://github.com/KevinAiken/CSC4980_horse_racing_dapp/tree/master/app).
-
-6. Get to coding! 🤘
-
-## Making contributions to the Project
-We would like for each contributor to create their own branch that they have tested and push it up to master with a Pull Request once they have finished.
-Once tested and approved it will be folded in master.
-
-**For users**
-
+## How to view past races
+To view the results of past races go to [http://localhost:3000/past-races](localhost:3000/past-races) and click "Load Races".
 
 ## 🚶‍♀️ App walkthrough
 This is where pictures and a possible screen capture of how the app works would go.
-
-
-
-
-
-Directory layout is the same as truffle init, with a react app in ./app
