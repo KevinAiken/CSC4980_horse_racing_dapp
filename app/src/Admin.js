@@ -111,7 +111,7 @@ class Admin extends Component {
                 <div>
                 <Label>
                     Race Time
-                    <Input type="datetime-local"
+                    <Input type="text"
                         name="raceTime" value={this.state.raceTime} onChange={this.handleInputChange}/>
                 </Label>
                 <Label>
