@@ -39,27 +39,32 @@ $ git clone git@github.com:KevinAiken/CSC4980_horse_racing_dapp.git
 * Truffle: `$ npm install -g truffle`
 
 
-3. Navigate to the project folder via your terminal and install all the project node modules 
+3. Deploy the truffle contracts
+```BASH
+$ truffle migrate --all --reset
+```
+
+4. Navigate to the project folder via your terminal and install all the project node modules 
 ```BASH 
 $ cd app
 $ npm install
 ```
  
-4. Make sure that you are logged into your Metamask account.
+5. Make sure that you are logged into your Metamask account.
 
-5. Point Metamask at your local Ganache blockchain.
+6. Point Metamask at your local Ganache blockchain.
 You can see how to do this by doing the following:
 * Create a workspace in Ganache and enter your Metamask mneumonic in the "Accounts & Keys" section
 * Click on Metamask icon and click on the tab that says "Main Ethereum Network" and select "Custom RPC".
 * In the box titled "New RPC URL" (to the right of "New Network") enter http://127.0.0.1:8545 and click Save.
 
-6. Start the application
+7. Start the application
 > We are in the app folder
 ```BASH 
 $ npm start
 ```
 
-7. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+8. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
 ## Operating HorsEther
 
@@ -97,4 +102,30 @@ After a race's time passes, it becomes eligible to be evaluated. Evaluating a ra
 To view the results of past races go to [http://localhost:3000/past-races](http://localhost:3000/past-races) and click "Load Races".
 
 ## 🚶‍♀️ App screenshots
-This is where pictures and a possible screen capture of how the app works would go.
+
+
+Home Page
+![HorsEther home page](/screenshots/splash_page.png "HorsEther Splash Page")
+
+
+Place a bet
+![HorsEther bets](/screenshots/place-bet.png "HorsEther Bets")
+
+
+View past races
+![HorsEther past races](/screenshots/past-races.png "HorsEther Past Races")
+
+
+View Profile
+![HorsEther profile](/screenshots/profile-page.png "HorsEther Profile Page")
+
+
+Admin Panel
+![HorsEther admin panel](/screenshots/admin-panel.png "HorsEther Admin Panel")
+
+
+Example of a connection failure
+![HorsEther connection fail](/screenshots/connection-failure.png "HorsEther Connection Failure")
+
+
+
