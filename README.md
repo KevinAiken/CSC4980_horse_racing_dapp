@@ -6,7 +6,7 @@ An application for you and your friends to bet on horse races on the Blockchain 
 ## 💯 Project facts
 * Developed by Kevin Aiken, Alexander Mitchell, Jenny Choi, Kevin Luna, and Aarohi Savaliya.
 
-## Technology stack
+## Technology Stack
 ### Frontend
 1. React
 2. Reacstrap
@@ -69,7 +69,7 @@ $ npm start
 ## Operating HorsEther
 
 ### How to make new races
-Before you start placing bets you'll need to act as the admin and create some races to bet on. Keep on mind a race must be in the future. 
+Before you start placing bets you'll need to act as the admin and create some races to bet on. Keep in mind a race must be in the future. 
 1. Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) to view the admin panel.
 2. Type in a race time in ISO 8601 format under "Race Time". After this time bettors can no longer bet on the race, and the race becomes eligible to be evaluated. What evaluation is and how to do it is covered later.
 3. Enter the Admin Password, 'password'. 
